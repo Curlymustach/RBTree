@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace RBTree
 {
-    class Program
+    class Tree<T> where T : IComparable<T>
     {
-        static void Main(string[] args)
-        {
+        Node<T> Head;
+        public Tree()
+        { 
 
         }
     }
