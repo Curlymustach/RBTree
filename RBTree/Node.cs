@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace RBTree
 {
-    enum Color
+    public enum Color
     {
         RED,
         BLACK,
         DOUBLEBLACK
     };
 
-    class Node<T> where T : IComparable<T>
+    public class Node<T> where T : IComparable<T>
     {
         //Color myColor = Color.RED;
 
