@@ -61,6 +61,5 @@ namespace RBTree
         {
             return !isRightChild();
         }
-
     }
 }

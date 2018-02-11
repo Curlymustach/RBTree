@@ -10,6 +10,12 @@ namespace RBTree
     {
         static void Main(string[] args)
         {
+            Tree<int> tree = new Tree<int>();
+
+            tree.Add(5);
+            tree.Add(6);
+            tree.Add(7);
+            tree.Add(4);
 
         }
     }
