@@ -14,8 +14,9 @@ namespace RBTree
 
             tree.Add(5);
             tree.Add(6);
-            tree.Add(7);
             tree.Add(4);
+            tree.Add(2);
+            tree.Add(3);
 
         }
     }

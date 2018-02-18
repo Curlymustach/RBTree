@@ -22,10 +22,10 @@ namespace Red_BlackTests
             testTree.Add(6);
             Assert.AreEqual(6, testTree.Head.Right.Value);
 
-            testTree.Add(7);
-            Assert.AreEqual(7, testTree.Head.Right.Right.Value);
-            Assert.AreEqual(6, testTree.Head.Right.Right.Parent.Value);
-            Assert.AreEqual(5, testTree.Head.Right.Right.Grandparent.Value);
+            testTree.Add(4);
+            testTree.Add(2);
+            testTree.Add(3);
+            Assert.AreEqual(3, testTree.Head.Right.Left.Value);
             //Assert.AreEqual(testTree.Head, testTree.Head.Right.Parent);
         }
     }

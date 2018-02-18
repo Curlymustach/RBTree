@@ -21,54 +21,74 @@ namespace RBTree
         public void InsertRuleCheck(Node<T> node)
         {
             Head.Color = black;
-            if (node.Parent.Left != null && node.isRightChild())
+            if(node.Grandparent != null)
             {
-                node.Uncle = node.Parent.Left;
-            }
-            else
-            {
-                node.Uncle = node.Parent.Right;
-            }
+                if (node.Grandparent.Left != null && node.isRightChild())
+                {
+                    node.Uncle = node.Grandparent.Left;
+                }
+                else if (node.Grandparent.Right != null && node.isLeftChild())
+                {
+                    node.Uncle = node.Grandparent.Right;
+                }
+            }           
 
             Node<T> left = node.Left;
             Node<T> right = node.Right;
             Node<T> grandparent = node.Grandparent;
             Node<T> uncle = node.Uncle;
+            Node<T> parent = node.Parent;
 
-            if (node.Color == red && node.Parent.Color == red && node != Head)
+            if (node.Color == red && parent.Color == red && node != Head && node.Uncle != null)
             {
-                if(node.Uncle.Color == red)
+                if(uncle.Color == red)
                 {
-                    node.Parent.Color = black;
-                    node.Uncle.Color = black;
-                    node.Grandparent.Color = red;
-                    InsertRuleCheck(node.Grandparent);
+                    parent.Color = black;
+                    uncle.Color = black;
+                    grandparent.Color = red;
+                    InsertRuleCheck(grandparent);
                 }
-                if(node.Uncle.Color == black)
+                if(uncle.Color == black)
                 {
-                    if(node.isRightChild() && node.Parent.isLeftChild())
+                    if(node.isRightChild() && parent.isLeftChild())
                     {
-                        node.Parent = node.Grandparent;
-                        node.Left = node.Parent;
-                        node.Grandparent.Left = node;
-                        node.Left.Parent = node;
+                        parent = grandparent;
+                        left = parent;
+                        grandparent.Left = node;
+                        left.Parent = node;
+
+                        //node.Parent = node.Grandparent;
+                        //node.Left = node.Parent;
+                        //node.Grandparent.Left = node;
+                        //node.Left.Parent = node;
+
                         InsertRuleCheck(node);
                     }
-                    if (node.isLeftChild() && node.Parent.isLeftChild())
+                    if (node.isLeftChild() && parent.isLeftChild())
                     {
-
+                        Color temp = parent.Color;
+                        grandparent.Left = node;
+                        right = parent;
+                        parent.Parent = node;
+                        parent.Color = node.Color;
+                        node.Color = temp;
                     }
                     if (node.isLeftChild() && node.Parent.isRightChild())
                     {
-                        node.Parent = node.Grandparent;
-                        node.Right = node.Parent;
-                        node.Grandparent.Right = node;
-                        node.Right.Parent = node;
+                        parent = grandparent;
+                        right = parent;
+                        grandparent.Right = node;
+                        right.Parent = node;
                         InsertRuleCheck(node);
                     }
                     if (node.isRightChild() && node.Parent.isRightChild())
                     {
-
+                        Color temp = parent.Color;
+                        grandparent.Right = node;
+                        left = parent;
+                        parent.Parent = node;
+                        parent.Color = node.Color;
+                        node.Color = temp;
                     }
 
                 }
@@ -104,6 +124,7 @@ namespace RBTree
                             done = true;
                             temp.Right = node;
                             node.Parent = temp;
+                            InsertRuleCheck(node);
                         }
                         else if(temp.Right.Right == null)
                         {
@@ -111,6 +132,7 @@ namespace RBTree
                             temp.Right.Right = node;
                             node.Parent = temp.Right;
                             node.Grandparent = temp;
+                            InsertRuleCheck(node);
                         }
                         else
                         {
@@ -126,6 +148,7 @@ namespace RBTree
                             done = true;
                             temp.Left = node;
                             node.Parent = temp;
+                            InsertRuleCheck(node);
                         }
                         else if (temp.Left.Left == null)
                         {
@@ -133,6 +156,7 @@ namespace RBTree
                             temp.Left.Left = node;
                             node.Parent = temp.Left;
                             node.Grandparent = temp;
+                            InsertRuleCheck(node);
                         }
                         else
                         {
