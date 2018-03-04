@@ -9,9 +9,9 @@ namespace RBTree
     public class Tree<T> where T : IComparable<T>
     {
         public Node<T> Head;
-        Color red = Color.RED;
-        Color black = Color.BLACK;
-        Color doubleBlack = Color.DOUBLEBLACK;
+        //Color red = Color.RED;
+        //Color black = Color.BLACK;
+        //Color doubleBlack = Color.DOUBLEBLACK;
 
         public Tree()
         {
@@ -20,7 +20,7 @@ namespace RBTree
 
         public void InsertRuleCheck(Node<T> node)
         {
-            Head.Color = black;
+            Head.Color = false;
             if(node.Grandparent != null)
             {
                 if (node.Grandparent.Left != null && node.isRightChild())
@@ -31,7 +31,7 @@ namespace RBTree
                 {
                     node.Uncle = node.Grandparent.Right;
                 }
-            }           
+            }         
 
             Node<T> left = node.Left;
             Node<T> right = node.Right;
@@ -39,16 +39,16 @@ namespace RBTree
             Node<T> uncle = node.Uncle;
             Node<T> parent = node.Parent;
 
-            if (node.Color == red && parent.Color == red && node != Head && node.Uncle != null)
+            if (node.Color == true && parent.Color == true && node != Head && node.Uncle != null)
             {
-                if(uncle.Color == red)
+                if(uncle.Color == true)
                 {
-                    parent.Color = black;
-                    uncle.Color = black;
-                    grandparent.Color = red;
+                    parent.Color = false;
+                    uncle.Color = false;
+                    grandparent.Color = true;
                     InsertRuleCheck(grandparent);
                 }
-                if(uncle.Color == black)
+                if(uncle.Color == false)
                 {
                     if(node.isRightChild() && parent.isLeftChild())
                     {
@@ -66,7 +66,7 @@ namespace RBTree
                     }
                     if (node.isLeftChild() && parent.isLeftChild())
                     {
-                        Color temp = parent.Color;
+                        bool temp = parent.Color;
                         grandparent.Left = node;
                         right = parent;
                         parent.Parent = node;
@@ -83,7 +83,7 @@ namespace RBTree
                     }
                     if (node.isRightChild() && node.Parent.isRightChild())
                     {
-                        Color temp = parent.Color;
+                        bool temp = parent.Color;
                         grandparent.Right = node;
                         left = parent;
                         parent.Parent = node;
@@ -108,11 +108,11 @@ namespace RBTree
         {
             if (Head == null)
             {
-                Head = new Node<T>(value, black);
+                Head = new Node<T>(value,false); ;
             }
             else
-            {
-                Node<T> node = new Node<T>(value, red);
+            {]
+                Node<T> node = new Node<T>(value, true);
                 Node<T> temp = Head;
                 bool done = false;
                 do
