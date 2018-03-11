@@ -6,26 +6,17 @@ using System.Threading.Tasks;
 
 namespace RBTree
 {
-    public enum Color
-    {
-        RED,
-        BLACK,
-        DOUBLEBLACK
-    };
-
     public class Node<T> where T : IComparable<T>
     {
-        //Color myColor = Color.RED;
+
 
         public T Value;
         public Node<T> Left;
         public Node<T> Right;
         public Node<T> Parent;
-        public Node<T> Uncle;
-        public Node<T> Grandparent;
-        public Color Color;
+        public bool Color;
 
-        public Node(T Value, Node<T> Left, Node<T> Right, Node<T> Parent, Color Color)
+        public Node(T Value, Node<T> Left, Node<T> Right, Node<T> Parent, bool Color)
         {
             this.Value = Value;
             this.Left = Left;
@@ -41,10 +32,10 @@ namespace RBTree
             this.Right = Right;
         }
 
-        public Node(T Value, Color Color)
+        public Node(T Value)
         {
             this.Value = Value;
-            this.Color = Color;
+            Color = true;
         }
 
         public bool isRightChild()
@@ -60,6 +51,15 @@ namespace RBTree
         public bool isLeftChild()
         {
             return !isRightChild();
+        }
+
+        public bool isRed()
+        {
+            if (Color)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
