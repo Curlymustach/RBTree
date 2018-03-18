@@ -12,11 +12,11 @@ namespace RBTree
         {
             Tree<int> tree = new Tree<int>();
 
-            tree.Add(5);
-            tree.Add(6);
-            tree.Add(4);
-            tree.Add(2);
-            tree.Add(3);
+            tree.Insert(5);
+            tree.Insert(6);
+            tree.Insert(4);
+            tree.Insert(2);
+            tree.Insert(3);
 
         }
     }

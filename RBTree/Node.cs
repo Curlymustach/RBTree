@@ -8,8 +8,6 @@ namespace RBTree
 {
     public class Node<T> where T : IComparable<T>
     {
-
-
         public T Value;
         public Node<T> Left;
         public Node<T> Right;
@@ -53,13 +51,6 @@ namespace RBTree
             return !isRightChild();
         }
 
-        public bool isRed()
-        {
-            if (Color)
-            {
-                return true;
-            }
-            return false;
-        }
+        
     }
 }
