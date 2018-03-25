@@ -10,7 +10,7 @@ namespace RBTree
     {
         //public bool R = true;
         //public bool B = false;
-        public bool Color; // red is true, false is black
+        // red is true, false is black
         public Node<T> Head;
 
         public Tree()
@@ -24,7 +24,7 @@ namespace RBTree
             {
                 return false;
             }
-            return Color;
+            return node.Color;
         }
 
         public void FlipColor(Node<T> node) //node is parent
@@ -69,12 +69,12 @@ namespace RBTree
                 return new Node<T>(value);
             }
 
-            if(node.Left != null && node.Right != null)
+            if (isRed(node.Left) && isRed(node.Right)) 
             {
                 FlipColor(node);
             }
 
-            int compare = node.Value.CompareTo(value);
+            int compare = value.CompareTo(node.Value);
             if(compare == 0)
             {
                 Console.WriteLine("Please choose a different value");
@@ -97,6 +97,42 @@ namespace RBTree
                 node = RotateRight(node);
             }      
 
+            return node;
+        }
+
+        public Node<T> moveRedRight(Node<T> node)
+        {
+            FlipColor(node);
+            if(isRed(node.Left.Left))
+            {
+                RotateRight(node);
+                FlipColor(node);
+            }
+            return node;
+        }
+
+        public Node<T> moveRedLeft(Node<T> node)
+        {
+            FlipColor(node);
+            if(isRed(node.Right.Left))
+            {
+                node.Right = RotateLeft(node.Right);
+                node = RotateLeft(node);
+                FlipColor(node);
+            }
+            return node;
+        }
+
+        public void delete(T value)
+        {
+            Head = delete(Head, value);
+            Head.Color = false;
+        }
+
+        public Node<T> delete(Node<T> node, T value)
+        {
+            if (value.CompareTo(node.Value) < 0)
+            { }
             return node;
         }
     }
