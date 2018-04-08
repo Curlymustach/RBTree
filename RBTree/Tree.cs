@@ -27,7 +27,7 @@ namespace RBTree
             return node.Color;
         }
 
-        public void FlipColor(Node<T> node) //node is parent
+        public void FlipColor(Node<T> node) 
         {
             node.Color = !node.Color;
             node.Left.Color = !node.Left.Color;
@@ -123,17 +123,71 @@ namespace RBTree
             return node;
         }
 
-        public void delete(T value)
+        public Node<T> FixUp(Node<T> node)
         {
-            Head = delete(Head, value);
+            if(isRed(node.Right))
+            {
+                RotateLeft(node);
+            }
+            if(isRed(node.Left) && isRed(node.Left.Left))
+            {
+                RotateRight(node);
+            }
+            if(isRed(node.Left) && isRed(node.Right))
+            {
+                FlipColor(node);
+            }
+            if(isRed(node.Left.Right))
+            {
+                RotateLeft(node.Left);
+                RotateRight(node.Left);
+            }
+            return node;
+        }
+
+        public void Delete(T value)
+        {
+            Head = Delete(Head, value);
             Head.Color = false;
         }
 
-        public Node<T> delete(Node<T> node, T value)
+        public Node<T> Delete(Node<T> node, T value)
         {
             if (value.CompareTo(node.Value) < 0)
-            { }
-            return node;
+            {
+                if(!isRed(node.Left) && !isRed(node.Left.Left))
+                {
+                    moveRedLeft(node);
+                }
+                node.Left = Delete(node.Left, value);
+            }
+            else
+            {
+                node.Right = Delete(node.Right, value);
+                if(isRed(node.Left))
+                {
+                    RotateRight(node);
+                }
+                if(value.CompareTo(node.Value) == 0)
+                {
+                    if(!isRed(node.Left) && !isRed(node.Right))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        if(!isRed(node.Right) && !isRed(node.Right.Left))
+                        {
+                            moveRedRight(node);
+                        }
+                        //if right child is 2-node -> moveredright
+                        //find right sub-tree min value, replace the value to delete w/ min value
+                        // recursively delete for that min value
+                    }
+                }
+
+            }
+            return FixUp(node);
         }
     }
 }
