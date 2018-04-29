@@ -18,8 +18,12 @@ namespace RBTree
             tree.Insert(2);
             tree.Insert(3);
 
+            tree.Delete(3);
+            tree.Delete(2);
+            tree.Delete(4);
             tree.Delete(6);
-            
+            tree.Delete(5);
+
 
         }
     }

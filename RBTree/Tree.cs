@@ -100,55 +100,6 @@ namespace RBTree
             return node;
         }
 
-        public Node<T> moveRedRight(Node<T> node)
-        {
-            FlipColor(node);
-            if (isRed(node.Left.Left))
-            {
-                node = RotateRight(node);
-                FlipColor(node);
-            }
-            return node;
-        }
-
-        public Node<T> moveRedLeft(Node<T> node)
-        {
-            FlipColor(node);
-            if (isRed(node.Right.Left))
-            {
-                node.Right = RotateLeft(node.Right);
-                node = RotateLeft(node);
-                FlipColor(node);
-            }
-            return node;
-        }
-
-        public Node<T> FixUp(Node<T> node)
-        {
-            if (isRed(node.Right))
-            {
-                node = RotateLeft(node);
-            }
-            if (isRed(node.Left) && isRed(node.Left.Left))
-            {
-                node = RotateRight(node);
-            }
-            if (isRed(node.Left) && isRed(node.Right))
-            {
-                FlipColor(node);
-            }
-            if (node.Left != null && isRed(node.Left.Right) && !isRed(node.Left.Left))
-            {
-                node = RotateLeft(node.Left);
-                if(isRed(node.Left))
-                {
-                    node = RotateRight(node.Left);
-                }
-                
-            }
-            return node;
-        }
-
         public void Delete(T value)
         {
             Head = Delete(Head, value);
@@ -195,6 +146,55 @@ namespace RBTree
                 
             }
             return FixUp(node);
+        }
+
+        public Node<T> moveRedRight(Node<T> node)
+        {
+            FlipColor(node);
+            if (isRed(node.Left.Left))
+            {
+                node = RotateRight(node);
+                FlipColor(node);
+            }
+            return node;
+        }
+
+        public Node<T> moveRedLeft(Node<T> node)
+        {
+            FlipColor(node);
+            if (isRed(node.Right.Left) && isRed(node.Right))
+            {
+                node.Right = RotateRight(node.Right);
+                node = RotateLeft(node);
+                FlipColor(node);
+            }
+            return node;
+        }
+
+        public Node<T> FixUp(Node<T> node)
+        {
+            if (isRed(node.Right))
+            {
+                node = RotateLeft(node);
+            }
+            if (isRed(node.Left) && isRed(node.Left.Left))
+            {
+                node = RotateRight(node);
+            }
+            if (isRed(node.Left) && isRed(node.Right))
+            {
+                FlipColor(node);
+            }
+            if (node.Left != null && isRed(node.Left.Right) && !isRed(node.Left.Left))
+            {
+                node = RotateLeft(node.Left);
+                if (isRed(node.Left) && node.Left.Left != null)
+                {
+                    node = RotateRight(node.Left);
+                }
+
+            }
+            return node;
         }
 
         public Node<T> GetMinimum(Node<T> node)
